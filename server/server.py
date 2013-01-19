@@ -2,6 +2,7 @@ import web
 import os
 
 urls = (
+ '/', 'index',
 '/images/(.*)', 'images' #this is where the image folder is located....
 )
 
@@ -21,3 +22,12 @@ class images:
             return open('images/%s'%name,"rb").read() # Notice 'rb' for reading images
         else:
             raise web.notfound()
+
+class index:
+    def GET(self):
+        return render.base(view.listing())
+
+if __name__ == "__main__":
+    app = web.application(urls, globals())
+    app.internalerror = web.debugerror
+    app.run()
